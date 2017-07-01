@@ -1,0 +1,22 @@
+body {
+	color: #fff;
+	background: #000 url('../images/layout/death-star.jpg') no-repeat left top;
+	-webkit-background-size: cover;
+	background-size: cover;
+	height: 100%;
+}
+.character,
+.character-enemy {
+	display: inline-block;
+	margin-right: 20px;
+	width: 200px;
+	height: 200px;
+	border: solid 1px #fff;
+}
+.character:hover,
+.character-active {
+	border: solid 1px green;
+}
+.character-enemy {
+	border: solid 1px red;
+}
