@@ -5,6 +5,12 @@ body {
 	background-size: cover;
 	height: 100%;
 }
+.game-logo {
+	position: absolute;
+	right: 50px;
+	top: 50px;
+	width: 300px;
+}
 .character,
 .character-enemy {
 	display: inline-block;
@@ -19,4 +25,10 @@ body {
 }
 .character-enemy {
 	border: solid 1px red;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+	display: block;
 }

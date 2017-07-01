@@ -26,8 +26,6 @@ $(document).ready(function($) {
 
     $('#enemies-wrap').show().append(enemies);
     $('#pick-character').text('Your Charater');
-
-
   });
 
   // Had to use document for elements that were moved.
