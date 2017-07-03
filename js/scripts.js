@@ -1,27 +1,37 @@
 $(document).ready(function($) {
 
   // Setting up Variables
-  var characters = ['Obi-Wan Kenobi', 'Luke Skywalker', 'Darth Sidious', 'Darth Maul'];
+  var characters = [
+    { name:"Han Solo", health: 100, image: 'han-solo.jpg' },
+    { name:"Yoda", health: 120, image: 'yoda.jpg' },
+    { name:"Darth Maul", health: 150, image: 'darth-maul.jpg' },
+    { name:"Darth Vader", health: 180, image: 'darth-vader.jpg' }
+  ];
   var attack = 0;
-  var health = [100, 120, 150, 180];
 
   $('#enemies-wrap, #fighting-wrap').hide();
 
   // Create div for each character
-  $.each( characters, function( key, value ) {
-    var character = $('<div>').attr('class', 'character');
+  $.each( characters, function( key, character ) {
+    var characterItem = $('<div>').attr('class', 'character');
     var healthSpan = $('<span class="health">').attr('class', 'health');
+    var characterImage = $('<img>').attr('src', 'images/characters/' + character.image + '' );
+    var charInfo = $('<div class="character-info">');
 
     attack = Math.floor(Math.random() * 10 ) + 2;
 
-    character.attr('data-health', health[key] );
-    character.attr('data-attack', attack );
+    characterItem.attr('data-health', character.health );
+    characterItem.attr('data-attack', attack );
 
-    character.text( value );
-    healthSpan.text( health[key] );
+    healthSpan.text( character.health );
+    charInfo.text( character.name );
+    charInfo.append( healthSpan );
 
-    $('#characters-wrap').append(character);
-    character.append(healthSpan);
+    characterItem.append(characterImage);
+    characterItem.append(charInfo);
+
+    $('#characters-wrap').append( characterItem );
+
   });
 
   // Click event for characters
@@ -66,13 +76,21 @@ $(document).ready(function($) {
     enemyAttack = parseInt(enemyAttack);
 
     fighterAttack += fighterAttack++;
-    console.log(enemyHealth);
-    console.log(fighterAttack);
+    enemyAttack += enemyAttack++;
 
+    fighterHealth = fighterHealth - enemyAttack;
     enemyHealth = enemyHealth - fighterAttack;
 
+    console.log('Fighter Health : ' + fighterHealth);
+    console.log('Fighter Attack : ' + fighterAttack);
+    console.log('Enemy Health : ' + enemyHealth);
+    console.log('Enemy Attack : ' + enemyAttack);
 
-    console.log(enemyHealth);
+    // Update data attributes
+    fighterHealth = fighter.attr('data-health', fighterHealth );
+    fighterAttack = fighter.attr('data-attack', fighterAttack );
+    enemyHealth = enemy.attr('data-health', enemyHealth );
+    enemyAttack = enemy.attr('data-attack', enemyAttack);
 
   });
 
