@@ -4,7 +4,7 @@
 	<title>Week 4 Game - Mario Melchor</title>
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 	<script src="js/scripts.js"></script>
-	<link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Bungee|Roboto:400,400i,700,700i" rel="stylesheet">
 	<link rel="stylesheet" href="css/reset.css">
 	<link rel="stylesheet" href="css/styles.css">
 </head>
@@ -15,21 +15,28 @@
 
 
 <div class="game-container">
-	<div id="characters-wrap">
+
+	<div id="characters-wrap" class="character-col">
 		<h1 id="pick-character">Pick a Character</h1>
 	</div><!-- /#characters-wrap -->
 
+	<div id="game-stats" class="game-stats-col">
+		<button id="fight-btn" class="btn">Fight</button>
+		<div class="attack-stats"></div>
+		<h6 class="game-stats-win blinker">You Win</h6>
+		<h6 class="game-stats-loose blinker">You Loose</h6>
+	</div><!-- /#game-stats -->
+
+	<div id="fighting-wrap" class="fighting-col">
+		<h1>Your Enemy</h1>
+	</div><!-- /#fighting-wrap -->
+
 	<div id="enemies-wrap">
-		<h1>Pick your Enemy</h1>
+		<h1>Pick your Enemies</h1>
 	</div><!-- /#enemies-wrap -->
 
-	<div id="fighting-wrap">
-		<h1>Fighting Against</h1>
-	</div>
 
-	<button id="fight-btn" class=>Fight</button>
 </div><!-- /.game-container -->
-
 
 </body>
 </html>

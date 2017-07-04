@@ -4,9 +4,15 @@
 	#Layout
 \*------------------------------------*/
 
+* {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
 body {
 	color: #fff;
-	font-family: 'Bungee', cursive;
+	font-family: 'Roboto', sans-serif;
 	background: #000 url('../images/layout/death-star.jpg') no-repeat left top;
 	-webkit-background-size: cover;
 	background-size: cover;
@@ -35,7 +41,13 @@ body {
 #characters-wrap,
 #enemies-wrap,
 #fighting-wrap {
+	padding: 20px;
 	margin-bottom: 40px;
+	background: #282727;
+	background: rgba( 40, 39, 39, .50 );
+}
+#enemies-wrap {
+	clear: both;
 }
 .character,
 .character-enemy {
@@ -63,38 +75,20 @@ body {
 \*------------------------------------*/
 
 h1, h2, h3, h4, h5, h6 {
+	font-family: 'Bungee', cursive;
+	padding-bottom: 10px;
 	margin-bottom: 20px;
+	border-bottom: solid 2px #2c2c2c;
 }
 h1 {
-	font-size: 32px;
-}
-h2 {
-}
-h3 {
-}
-h4 {
-}
-h5 {
-}
-h6 {
-}
-figure {
-	margin: 0;
+	font-size: 28px;
 }
 img {
 	height: auto;
 	max-width: 100%;
 }
-textarea {
-	resize: vertical;
-}
-::-moz-selection {
-	background: #b3d4fc;
-	text-shadow: none;
-}
-::selection {
-	background: #b3d4fc;
-	text-shadow: none;
+p {
+	margin-bottom: 15px;
 }
 
 /*------------------------------------*\
@@ -112,8 +106,43 @@ textarea {
 	display: block;
 }
 .health {
+	color: green;
+	float: right;
 	display: inline-block;
 	margin-left: 5px;
+}
+.split .character-col,
+.split .game-stats-col,
+.split .fighting-col {
+	float: left;
+	width: 30%;
+	min-height: 340px;
+}
+.split .game-stats-col {
+	margin-left: 5%;
+	margin-right: 5%;
+	text-align: center;
+	border-left: solid 2px #2c2c2c;
+	border-right: solid 2px #2c2c2c;
+	padding-top: 140px;
+}
+.attack-stats {
+	margin-top: 35px;
+}
+.game-stats-win {
+	color: lime;
+}
+.game-stats-loose {
+	color: red;
+}
+.game-stats-win,
+.game-stats-loose  {
+	animation: blinker 1s linear infinite;
+}
+@keyframes blinker {
+	50% {
+		opacity: 0;
+	}
 }
 
 /*------------------------------------*\
@@ -121,38 +150,20 @@ textarea {
 \*------------------------------------*/
 
 .btn {
-	border-radius: 0;
-}
-.btn-transparent {
 	color: #fff;
-	background-color: transparent;
-	border-color: #fff;
+	text-transform: uppercase;
+	padding: 10px 20px;
+	background-color: #98ca3c;
+	border: none;
 }
-.btn-transparent:hover,
-.btn-transparent:focus  {
+.btn:hover,
+.btn:focus  {
+	color: #000;
+	background-color: #fff;
+}
+.btn:active,
+.btn:active:hover,
+.btn:active:focus {
 	color: #fff;
 	background-color: #98ca3c;
-	border-color: #000;
-}
-.btn-transparent:active,
-.btn-transparent:active:hover,
-.btn-transparent:active:focus {
-	color: #fff;
-	background-color: transparent;
-	border-color: #fff;
-}
-.btn-success {
-	background-color: #76b54a;
-	border-color: #6AA343;
-}
-.btn-success:hover,
-.btn-success:focus {
-	background-color: #449d44;
-	border-color: #398439;
-}
-.btn-success:active
-.btn-success:active:hover,
-.btn-success:active:focus {
-	background-color: #398439;
-	border-color: #255625;
 }

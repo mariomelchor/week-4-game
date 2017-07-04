@@ -9,7 +9,8 @@ $(document).ready(function($) {
   ];
   var attack = 0;
 
-  $('#enemies-wrap, #fighting-wrap').hide();
+  // Hide from the DOM
+  $('#enemies-wrap, #fighting-wrap, #game-stats, .game-stats-loose, .game-stats-win').hide();
 
   // Create div for each character
   $.each( characters, function( key, character ) {
@@ -18,7 +19,7 @@ $(document).ready(function($) {
     var characterImage = $('<img>').attr('src', 'images/characters/' + character.image + '' );
     var charInfo = $('<div class="character-info">');
 
-    attack = Math.floor(Math.random() * 10 ) + 2;
+    attack = Math.floor(Math.random() * 12 ) + 1;
 
     characterItem.attr('data-health', character.health );
     characterItem.attr('data-attack', attack );
@@ -27,8 +28,8 @@ $(document).ready(function($) {
     charInfo.text( character.name );
     charInfo.append( healthSpan );
 
-    characterItem.append(characterImage);
-    characterItem.append(charInfo);
+    characterItem.append( characterImage );
+    characterItem.append( charInfo );
 
     $('#characters-wrap').append( characterItem );
 
@@ -36,7 +37,6 @@ $(document).ready(function($) {
 
   // Click event for characters
   $('.character').on('click', function(e) {
-    // console.log( $(this).attr('data-health' ) );
     $(this).addClass('character-active');
 
     var enemies =  $('.character').not( '.character-active' );
@@ -44,17 +44,20 @@ $(document).ready(function($) {
     enemies.removeClass('character');
 
     $('#enemies-wrap').show().append(enemies);
-    $('#pick-character').text('Your Charater');
+    $('#pick-character').text('Your Character');
   });
 
   // Had to use document for elements that were moved.
   $(document).on('click', '.character-enemy', function(e) {
 
-    var fighter = $(this);
-    fighter.addClass('character-fight');
-    fighter.removeClass('character-active');
+    var enemy = $(this);
+    enemy.addClass('character-fight');
+    enemy.removeClass('character-active');
 
-    $('#fighting-wrap').show().append( fighter );
+    $('.game-container').addClass('split');
+
+    $('#fighting-wrap').show().append( enemy );
+    $('#game-stats').show();
 
   });
 
@@ -63,6 +66,7 @@ $(document).ready(function($) {
 
     var fighter = $('.character-active');
     var enemy = $('.character-fight');
+    var stats = $('.attack-stats');
 
     var fighterHealth = fighter.attr('data-health');
     var fighterAttack = fighter.attr('data-attack');
@@ -76,23 +80,42 @@ $(document).ready(function($) {
     enemyAttack = parseInt(enemyAttack);
 
     fighterAttack += fighterAttack++;
-    enemyAttack += enemyAttack++;
 
     fighterHealth = fighterHealth - enemyAttack;
     enemyHealth = enemyHealth - fighterAttack;
 
-    console.log('Fighter Health : ' + fighterHealth);
-    console.log('Fighter Attack : ' + fighterAttack);
-    console.log('Enemy Health : ' + enemyHealth);
-    console.log('Enemy Attack : ' + enemyAttack);
-
     // Update data attributes
-    fighterHealth = fighter.attr('data-health', fighterHealth );
-    fighterAttack = fighter.attr('data-attack', fighterAttack );
-    enemyHealth = enemy.attr('data-health', enemyHealth );
-    enemyAttack = enemy.attr('data-attack', enemyAttack);
+    fighter.attr('data-health', fighterHealth );
+    fighter.attr('data-attack', fighterAttack );
+    enemy.attr('data-health', enemyHealth );
+    enemy.attr('data-attack', enemyAttack);
+
+    // Update health stats in DOM
+    fighter.find('.health').text(fighterHealth);
+    enemy.find('.health').text(enemyHealth);
+
+    // Attack Stats
+    var statsHtml = '<p>You Attacked for ' + fighterAttack + ' damage </p>';
+    statsHtml += '<p>Attacked you back for ' + enemyAttack + ' damage</p>';
+    stats.html(statsHtml);
+
+    console.log('Fighter Health: ' + fighterHealth);
+    console.log('Enemy Health: ' + enemyHealth);
+
+    // You Loose
+    if ( fighterHealth <= 0 ) {
+      console.log('You Loose');
+      $('.game-stats-loose').show();
+      fighter.remove();
+    }
+
+    // You Win
+    if ( enemyHealth <= 0 ) {
+      console.log('You Win');
+      $('.game-stats-win').show();
+      enemy.remove();
+    }
 
   });
-
 
 });
