@@ -2,6 +2,7 @@ $(document).ready(function($) {
 
   // Setting up Variables
   var characters = [
+    { name:"Stormtrooper", health: 80, image: 'stormtrooper.jpg' },
     { name:"Han Solo", health: 100, image: 'han-solo.jpg' },
     { name:"Yoda", health: 120, image: 'yoda.jpg' },
     { name:"Darth Maul", health: 150, image: 'darth-maul.jpg' },
@@ -64,56 +65,64 @@ $(document).ready(function($) {
   // Click event for fight btn
   $('#fight-btn').on('click', function(e) {
 
+    var stats = $('.attack-stats');
     var fighter = $('.character-active');
     var enemy = $('.character-fight');
-    var stats = $('.attack-stats');
 
     var fighterHealth = fighter.attr('data-health');
     var fighterAttack = fighter.attr('data-attack');
-
     var enemyHealth = enemy.attr('data-health');
     var enemyAttack = enemy.attr('data-attack');
 
-    fighterHealth = parseInt(fighterHealth);
-    fighterAttack = parseInt(fighterAttack);
-    enemyHealth = parseInt(enemyHealth);
-    enemyAttack = parseInt(enemyAttack);
+    var statsHtml = '';
 
-    fighterAttack += fighterAttack++;
+    if ( $('.character-fight').length == 0 ) {
 
-    fighterHealth = fighterHealth - enemyAttack;
-    enemyHealth = enemyHealth - fighterAttack;
+      statsHtml = '<p>Choose a new Enemy</p>';
+      stats.html(statsHtml);
 
-    // Update data attributes
-    fighter.attr('data-health', fighterHealth );
-    fighter.attr('data-attack', fighterAttack );
-    enemy.attr('data-health', enemyHealth );
-    enemy.attr('data-attack', enemyAttack);
+    } else {
 
-    // Update health stats in DOM
-    fighter.find('.health').text(fighterHealth);
-    enemy.find('.health').text(enemyHealth);
+      fighterHealth = parseInt(fighterHealth);
+      fighterAttack = parseInt(fighterAttack);
+      enemyHealth = parseInt(enemyHealth);
+      enemyAttack = parseInt(enemyAttack);
 
-    // Attack Stats
-    var statsHtml = '<p>You Attacked for ' + fighterAttack + ' damage </p>';
-    statsHtml += '<p>Attacked you back for ' + enemyAttack + ' damage</p>';
-    stats.html(statsHtml);
+      fighterAttack += fighterAttack++;
 
-    console.log('Fighter Health: ' + fighterHealth);
-    console.log('Enemy Health: ' + enemyHealth);
+      fighterHealth = fighterHealth - enemyAttack;
+      enemyHealth = enemyHealth - fighterAttack;
 
-    // You Loose
-    if ( fighterHealth <= 0 ) {
-      console.log('You Loose');
-      $('.game-stats-loose').show();
-      fighter.remove();
-    }
+      // Update data attributes
+      fighter.attr('data-health', fighterHealth );
+      fighter.attr('data-attack', fighterAttack );
+      enemy.attr('data-health', enemyHealth );
+      enemy.attr('data-attack', enemyAttack);
 
-    // You Win
-    if ( enemyHealth <= 0 ) {
-      console.log('You Win');
-      $('.game-stats-win').show();
-      enemy.remove();
+      // Update health stats in DOM
+      fighter.find('.health').text(fighterHealth);
+      enemy.find('.health').text(enemyHealth);
+
+      // Attack Stats
+      statsHtml = '<p>You Attacked for ' + fighterAttack + ' damage </p>';
+      statsHtml += '<p>Attacked you back for ' + enemyAttack + ' damage</p>';
+      stats.html(statsHtml);
+
+      console.log('Fighter Health: ' + fighterHealth);
+      console.log('Enemy Health: ' + enemyHealth);
+
+      // You Loose
+      if ( fighterHealth <= 0 ) {
+        $('.game-stats-loose').show();
+        fighter.remove();
+      }
+
+      // You Win
+      if ( enemyHealth <= 0 ) {
+        $('.game-stats-win').show();
+        enemy.remove();
+      }
+
     }
 
   });

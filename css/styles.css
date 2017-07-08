@@ -9,7 +9,6 @@
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
-
 body {
 	color: #fff;
 	font-family: 'Roboto', sans-serif;
@@ -25,7 +24,9 @@ body {
 	background: #333;
 }
 .game-header .game-title {
-	margin-bottom: 0;
+	margin: 0;
+	padding: 0;
+	border-bottom: 0;
 }
 .starwars-logo {
 	position: absolute;
@@ -68,6 +69,9 @@ body {
 }
 .character-enemy {
 	border-color: red;
+}
+.character-enemy:hover {
+	border-color: #fff;
 }
 
 /*------------------------------------*\
