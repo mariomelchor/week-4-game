@@ -10,6 +10,7 @@ $(document).ready(function($) {
   ];
   var attack = 0;
   var attackCounter = 0;
+  var hasEnemy = false;
 
   // Hide from the DOM
   $('#enemies-wrap, #fighting-wrap, #game-stats, #restart-btn, .game-stats-loose, .game-stats-win').hide();
@@ -52,14 +53,18 @@ $(document).ready(function($) {
   // Had to use document for elements that were moved.
   $(document).on('click', '.character-enemy', function(e) {
 
-    var enemy = $(this);
-    enemy.addClass('character-fight');
-    enemy.removeClass('character-active');
+    if ( ! hasEnemy ) {
+      var enemy = $(this);
+      enemy.addClass('character-fight');
+      enemy.removeClass('character-active');
 
-    $('.game-container').addClass('game-container-split');
+      $('.game-container').addClass('game-container-split');
 
-    $('#fighting-wrap').show().append( enemy );
-    $('#game-stats').show();
+      $('#fighting-wrap').show().append( enemy );
+      $('#game-stats').show();
+
+      hasEnemy = true;
+    }
 
   });
 
@@ -81,7 +86,7 @@ $(document).ready(function($) {
     var statsHtml = '';
 
     // if no character is available to fight
-    if ( $('.character-fight').length == 0 ) {
+    if ( ! hasEnemy ) {
 
       statsHtml = '<p>Choose a new Enemy</p>';
       stats.html(statsHtml);
@@ -122,6 +127,7 @@ $(document).ready(function($) {
       if ( enemyHealth <= 0 ) {
         $('.game-stats-win').show();
         enemy.remove();
+        hasEnemy = false;
       }
 
       // If no enemies
