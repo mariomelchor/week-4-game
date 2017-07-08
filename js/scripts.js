@@ -12,7 +12,7 @@ $(document).ready(function($) {
   var attackCounter = 0;
 
   // Hide from the DOM
-  $('#enemies-wrap, #fighting-wrap, #game-stats, .game-stats-loose, .game-stats-win').hide();
+  $('#enemies-wrap, #fighting-wrap, #game-stats, #restart-btn, .game-stats-loose, .game-stats-win').hide();
 
   // Create div for each character
   $.each( characters, function( key, character ) {
@@ -115,6 +115,7 @@ $(document).ready(function($) {
       if ( fighterHealth <= 0 ) {
         $('.game-stats-loose').show();
         fighter.remove();
+        $('#restart-btn').show();
       }
 
       // You Win
@@ -123,8 +124,18 @@ $(document).ready(function($) {
         enemy.remove();
       }
 
+      // If no enemies
+      if ( $('.character-enemy').length == 0 ) {
+        $('#restart-btn').show();
+      }
+
     }
 
+  });
+
+  // Reset Game
+  $('#restart-btn').on('click', function(e) {
+    location.reload();
   });
 
 });
