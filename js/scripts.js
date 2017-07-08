@@ -9,6 +9,7 @@ $(document).ready(function($) {
     { name:"Darth Vader", health: 180, image: 'darth-vader.jpg' }
   ];
   var attack = 0;
+  var attackCounter = 0;
 
   // Hide from the DOM
   $('#enemies-wrap, #fighting-wrap, #game-stats, .game-stats-loose, .game-stats-win').hide();
@@ -20,7 +21,7 @@ $(document).ready(function($) {
     var characterImage = $('<img>').attr('src', 'images/characters/' + character.image + '' );
     var charInfo = $('<div class="character-info">');
 
-    attack = Math.floor(Math.random() * 12 ) + 1;
+    attack = Math.floor(Math.random() * 21 ) + 5;
 
     characterItem.attr('data-health', character.health );
     characterItem.attr('data-attack', attack );
@@ -55,7 +56,7 @@ $(document).ready(function($) {
     enemy.addClass('character-fight');
     enemy.removeClass('character-active');
 
-    $('.game-container').addClass('split');
+    $('.game-container').addClass('game-container-split');
 
     $('#fighting-wrap').show().append( enemy );
     $('#game-stats').show();
@@ -64,6 +65,9 @@ $(document).ready(function($) {
 
   // Click event for fight btn
   $('#fight-btn').on('click', function(e) {
+
+    $('.game-stats-loose').hide();
+    $('.game-stats-win').hide();
 
     var stats = $('.attack-stats');
     var fighter = $('.character-active');
@@ -76,6 +80,7 @@ $(document).ready(function($) {
 
     var statsHtml = '';
 
+    // if no character is available to fight
     if ( $('.character-fight').length == 0 ) {
 
       statsHtml = '<p>Choose a new Enemy</p>';
@@ -88,28 +93,23 @@ $(document).ready(function($) {
       enemyHealth = parseInt(enemyHealth);
       enemyAttack = parseInt(enemyAttack);
 
-      fighterAttack += fighterAttack++;
+      attackCounter += fighterAttack++;
 
       fighterHealth = fighterHealth - enemyAttack;
-      enemyHealth = enemyHealth - fighterAttack;
+      enemyHealth = enemyHealth - attackCounter;
 
       // Update data attributes
       fighter.attr('data-health', fighterHealth );
-      fighter.attr('data-attack', fighterAttack );
       enemy.attr('data-health', enemyHealth );
-      enemy.attr('data-attack', enemyAttack);
 
       // Update health stats in DOM
       fighter.find('.health').text(fighterHealth);
       enemy.find('.health').text(enemyHealth);
 
       // Attack Stats
-      statsHtml = '<p>You Attacked for ' + fighterAttack + ' damage </p>';
+      statsHtml = '<p>You Attacked for ' + attackCounter + ' damage </p>';
       statsHtml += '<p>Attacked you back for ' + enemyAttack + ' damage</p>';
       stats.html(statsHtml);
-
-      console.log('Fighter Health: ' + fighterHealth);
-      console.log('Enemy Health: ' + enemyHealth);
 
       // You Loose
       if ( fighterHealth <= 0 ) {
